@@ -76,10 +76,3 @@ This project analyzes the **Global Weather Repository** dataset from Kaggle to f
 
 ---
 
-## Demo Video
-
-[Add demo video link here]
-
----
-
-*Submitted for PM Accelerator Tech Assessment — June 2026*
