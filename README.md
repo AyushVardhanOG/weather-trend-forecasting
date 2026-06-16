@@ -1,129 +1,85 @@
-# 🌍 Global Weather Repository — Weather Trend Forecasting
-
-> **PM Accelerator Tech Assessment** | Advanced Data Science Project
-
----
-
-## 📌 Project Overview
-
-This project analyzes the **Global Weather Repository** dataset from Kaggle to forecast weather trends using both basic and advanced data science techniques. It covers data cleaning, EDA, anomaly detection, multiple forecasting models, feature importance, and spatial analysis.
+# Global Weather Repository — Weather Trend Forecasting
+**PM Accelerator Tech Assessment**
 
 ---
 
-## 🚀 PM Accelerator Mission
-PM Accelerator empowers aspiring and experienced product managers by providing world-class training, mentorship, and real-world project experience. Our mission is to accelerate your journey to becoming a top-tier product leader through hands-on learning and community support.
+## PM Accelerator Mission
+
+Welcome to PM Accelerator, a beacon of guidance for aspiring and experienced PMs alike. We have designed this platform to offer training, education, and job opportunities for Product Managers, creating room for constant improvement and shaping the next generation of PMs.
+
+**Our Mission:** By making industry-leading tools and education available to individuals from all backgrounds, we level the playing field for future PM leaders. We grant aspiring and experienced PMs what they need most — Access.
 
 ---
 
-## 📂 Repository Structure
+## Project Overview
 
-```
-├── weather_forecasting.ipynb   # Main Colab Notebook (all code)
-├── README.md                   # This file
-└── requirements.txt            # Python dependencies
-```
+This project analyzes the **Global Weather Repository** dataset from Kaggle to forecast global weather trends. It covers data cleaning, exploratory data analysis, anomaly detection, multiple forecasting models, feature importance, air quality analysis, and spatial/climate pattern analysis.
+
+**Dataset:** [Global Weather Repository — Kaggle](https://www.kaggle.com/datasets/nelgiriyewithana/global-weather-repository)
 
 ---
 
-## 📊 Dataset
+## Results
 
-**Source:** [Global Weather Repository on Kaggle](https://www.kaggle.com/datasets/nelgiriyewithana/global-weather-repository/code)
+| Metric | Value |
+|--------|-------|
+| Raw Dataset | 146,760 rows × 41 features |
+| After Cleaning | 144,301 rows |
+| Date Range | May 2024 – June 2026 |
+| Target Variable | temperature_celsius |
+| Mean Temperature | 21.74°C (range: -2.0 to 45.8°C) |
+| Anomalies Detected | 7,215 (5%) via Isolation Forest |
+| Best Model | XGBoost — MAE: 0.414 · RMSE: 1.226 · R²: 0.681 |
 
-- Daily weather data for cities worldwide
-- 40+ features including temperature, humidity, precipitation, wind, air quality, etc.
-
----
-
-## ⚙️ How to Run
-
-### Option 1: Google Colab (Recommended)
-1. Download `weather_forecasting.ipynb` from this repo
-2. Open [Google Colab](https://colab.research.google.com) and upload the notebook
-3. Download the dataset from Kaggle: `GlobalWeatherRepository.csv`
-4. Run **Cell 1** to install libraries
-5. Run **Cell 2** — upload the CSV when prompted (or mount Google Drive)
-6. Run all remaining cells in order
-
-### Option 2: VS Code / Local
-```bash
-git clone https://github.com/YOUR_USERNAME/weather-forecasting
-cd weather-forecasting
-pip install -r requirements.txt
-jupyter notebook weather_forecasting.ipynb
-```
-
----
-
-## 🔬 Analyses Performed
-
-| # | Analysis | Description |
-|---|----------|-------------|
-| 1 | **Data Cleaning** | Handle missing values, remove outliers (IQR), normalize data |
-| 2 | **EDA** | Temperature/precipitation distributions, correlations, country-level trends |
-| 3 | **Anomaly Detection** | Isolation Forest to flag unusual weather events |
-| 4 | **ARIMA Forecasting** | Time series forecast with stationarity test |
-| 5 | **Prophet Forecasting** | Facebook Prophet with seasonal decomposition |
-| 6 | **XGBoost Forecasting** | Gradient boosting with lag features |
-| 7 | **Ensemble Model** | Average of all 3 models for improved accuracy |
-| 8 | **Feature Importance** | Random Forest + XGBoost feature rankings |
-| 9 | **Spatial Analysis** | Plotly globe map + Folium heatmap |
-| 10 | **Climate Patterns** | Seasonal trends, country-wise comparisons |
-| 11 | **Air Quality Analysis** | Correlation between AQ metrics and temperature |
-
----
-
-## 📈 Models & Metrics
+### Model Comparison
 
 | Model | MAE | RMSE | R² |
 |-------|-----|------|----|
-| ARIMA | — | — | — |
-| Prophet | — | — | — |
-| XGBoost | — | — | — |
-| **Ensemble** | — | — | — |
-
-*(Values filled in after running the notebook)*
+| ARIMA (5,1,0) | 1.5763 | 2.3601 | -0.1954 |
+| Prophet | 2.0716 | 2.5376 | -0.3819 |
+| **XGBoost** | **0.4139** | **1.2258** | **0.6811** |
+| Ensemble | 0.6548 | 1.3554 | 0.5972 |
 
 ---
 
-## 📦 Requirements
+## Analyses Performed
 
-```
-pandas
-numpy
-matplotlib
-seaborn
-plotly
-folium
-scikit-learn
-xgboost
-statsmodels
-prophet
-```
-
-Install all at once:
-```bash
-pip install -r requirements.txt
-```
+| Analysis | Method | Key Finding |
+|----------|--------|-------------|
+| Data Cleaning | IQR + StandardScaler | 0 missing values; 2,459 outliers removed |
+| EDA | Distributions, Correlations | 8°C seasonal range; humidity negatively correlated |
+| Anomaly Detection | Isolation Forest (5%) | 7,215 anomalies — extreme events & sensor noise |
+| Forecasting | ARIMA, Prophet, XGBoost, Ensemble | XGBoost best; lag features key signal |
+| Feature Importance | Random Forest + XGBoost | feels_like_celsius most predictive (38.2%) |
+| Spatial Analysis | Plotly globe + Folium heatmap | Equatorial regions hottest |
+| Air Quality | Correlation analysis | UV↔Ozone (0.71); rain reduces PM10 |
 
 ---
 
-## 📝 Key Insights
+## Key Insights
 
-- Temperature shows clear seasonal patterns across the globe
-- Isolation Forest detected ~5% anomalous readings in the dataset
-- XGBoost with lag features outperforms ARIMA on short-term forecasting
-- Ensemble model provides the most stable predictions overall
-- Strong correlations exist between humidity, dew point, and temperature
-
----
-
-## 🎥 Demo Video
-
-[Link to demo video — add here after recording]
+- XGBoost with lag features is the best model — yesterday's temperature is the strongest predictor
+- Linear models (ARIMA, Prophet) underperform on globally aggregated weather data
+- 5% of readings are anomalous — traced to extreme heat events, dust storms, or sensor noise
+- Air quality is strongly weather-dependent — UV drives ozone, rain clears particulates
+- Clear seasonal pattern: 8°C range from December trough to July peak
 
 ---
 
-## 👤 Author
+## Files
 
-Your Name  
-PM Accelerator Tech Assessment Submission
+| File | Description |
+|------|-------------|
+| `weather_forecasting.ipynb` | Full Colab notebook with all code and outputs |
+| `Weather_Forecasting_Report.docx` | Complete project report |
+| `requirements.txt` | Python dependencies |
+
+---
+
+## Demo Video
+
+[Add demo video link here]
+
+---
+
+*Submitted for PM Accelerator Tech Assessment — June 2026*
